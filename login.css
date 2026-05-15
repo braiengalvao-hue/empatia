@@ -1,0 +1,127 @@
+:root {
+    --background-start: #f4f1e8;
+    --background-end: #d7e2d3;
+    --card: rgba(255, 255, 255, 0.95);
+    --accent: #6b8a63;
+    --accent-strong: #4f6b4b;
+    --text: #2d3d2e;
+    --soft-shadow: 0 20px 60px rgba(44, 62, 80, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    min-height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(circle at top left, rgba(255,255,255,0.95), transparent 40%),
+                linear-gradient(180deg, var(--background-start) 0%, var(--background-end) 100%);
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.login-shell {
+    width: min(520px, 100%);
+    border-radius: 30px;
+    padding: 36px 36px 28px;
+    background: var(--card);
+    box-shadow: var(--soft-shadow);
+    border: 1px solid rgba(105, 92, 75, 0.14);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-shell::before {
+    content: '';
+    position: absolute;
+    width: 210px;
+    height: 180px;
+    background: rgba(111, 145, 104, 0.15);
+    border-radius: 58% 42% 70% 30% / 30% 40% 60% 70%;
+    top: -40px;
+    right: -40px;
+}
+
+h1 {
+    margin: 0 0 14px;
+    color: var(--accent-strong);
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    letter-spacing: -0.03em;
+}
+
+p.description {
+    margin: 0 0 28px;
+    color: #575d52;
+    line-height: 1.6;
+}
+
+.form-group {
+    display: grid;
+    gap: 14px;
+}
+
+input[name="username"] {
+    width: 100%;
+    border-radius: 18px;
+    border: 1px solid rgba(86, 103, 80, 0.18);
+    padding: 16px 18px;
+    font-size: 1rem;
+    color: var(--text);
+    outline: none;
+    background: rgba(255,255,255,0.9);
+}
+
+textarea[name="phrase"] {
+    width: 100%;
+    min-height: 140px;
+    border-radius: 18px;
+    border: 1px solid rgba(86, 103, 80, 0.18);
+    padding: 16px 18px;
+    font-size: 1rem;
+    color: var(--text);
+    outline: none;
+    background: rgba(255,255,255,0.9);
+    resize: vertical;
+}
+
+input[name="username"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(111, 145, 104, 0.12);
+}
+ 
+textarea[name="phrase"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(111, 145, 104, 0.12);
+}
+
+button[type="submit"] {
+    border: none;
+    padding: 16px 20px;
+    border-radius: 18px;
+    width: 100%;
+    background: linear-gradient(135deg, #7aa76e 0%, #5a7f52 100%);
+    color: #faf9f3;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 18px 32px rgba(90, 127, 82, 0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 34px rgba(90, 127, 82, 0.2);
+}
+
+footer.note {
+    margin-top: 26px;
+    font-size: 0.95rem;
+    color: #6f7e6d;
+}
