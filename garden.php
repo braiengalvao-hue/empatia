@@ -174,6 +174,10 @@ try {
 }
 
 $config = app_config();
+$ratedVotes = [];
+foreach ($_SESSION['rated_entries'] ?? [] as $ratedKey) {
+    $ratedVotes[(string) $ratedKey] = true;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -181,6 +185,9 @@ $config = app_config();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plantação do Amor - <?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="garden.css">
 </head>
 <body>
@@ -191,9 +198,9 @@ $config = app_config();
         <p><a href="setup_db.php">Executar configuração do banco</a> · <a href="index.php">Voltar ao início</a></p>
     </main>
 <?php else: ?>
-    <div id="consent-modal" class="modal">
+    <div id="consent-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="consent-title">
         <div class="modal-panel consent-panel">
-            <h2>Compromisso do Coração</h2>
+            <h2 id="consent-title">Compromisso do Coração</h2>
             <p class="modal-copy">Esta experiência nasceu para ser um lugar de sentimentos profundos. Você deve aceitar o compromisso de criar com honestidade e sentido antes de poder ver, desenhar ou compartilhar.</p>
             <p class="modal-copy">Aqui falamos sobre comprometimento e desenvolvimento pessoal. Este campo é seu espaço de cuidado: ao aceitar, você abre a porta para a sua plantação de sentimentos.</p>
             <div class="consent-actions">
@@ -213,23 +220,28 @@ $config = app_config();
         </div>
         <div class="hud-actions">
             <button id="ranking-button" type="button">Ranking</button>
-            <button id="toggle-rain" type="button">Chover Sentimentos</button>
+            <button id="toggle-rain" type="button" aria-pressed="false">Chover no Jardim</button>
         </div>
     </div>
-    <div id="map-hint">Clique no seu espaço no mapa para desenhar o sentimento.</div>
-    <div id="map-container">
-        <canvas id="map-canvas"></canvas>
+    <div id="map-hint" role="status">Arraste o mapa para explorar. Clique em um espaço livre para plantar.</div>
+    <div id="map-viewport" aria-label="Mapa do jardim de sentimentos">
+        <div id="map-stage">
+            <canvas id="map-canvas"></canvas>
+        </div>
     </div>
 
-    <div id="draw-modal" class="modal hidden">
-        <div class="modal-panel">
-            <button class="close-modal" data-close>&times;</button>
-            <h2>Plantação do Amor</h2>
-            <p class="modal-copy">Desenhe sua flor/sentimento apenas uma vez. Depois, o canvas ficará bloqueado.</p>
-            <div class="draw-stage">
+    <div id="draw-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="draw-modal-title">
+        <div class="modal-panel draw-panel">
+            <button class="close-modal" data-close type="button" aria-label="Fechar desenho">&times;</button>
+            <header class="draw-header">
+                <h2 id="draw-modal-title">Plantação do Amor</h2>
+                <p class="modal-copy draw-hint">Use caneta ou mouse na área branca. Recomendado: modo tela cheia para mesa digitalizadora.</p>
+            </header>
+            <div id="draw-stage" class="draw-stage">
                 <canvas id="draw-canvas" width="720" height="480"></canvas>
             </div>
             <div class="draw-controls">
+                <button id="toggle-draw-fullscreen" type="button" aria-pressed="false">Tela cheia</button>
                 <button id="clear-draw" type="button">Limpar</button>
                 <button id="save-draw" type="button">Salvar desenho</button>
             </div>
@@ -280,6 +292,8 @@ $config = app_config();
         window.USER_ENTRY = <?php echo json_encode($ownEntry, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
         window.FLOWER_ENTRIES = <?php echo json_encode($flowerEntries, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
         window.RANKINGS = <?php echo json_encode($rankings, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+        window.RATED_VOTES = <?php echo json_encode($ratedVotes, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+        window.FLOWER_MIN_DISTANCE = <?php echo (int) flower_min_distance(); ?>;
     </script>
     <script src="script.js"></script>
 <?php endif; ?>

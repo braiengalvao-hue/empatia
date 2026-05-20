@@ -15,7 +15,7 @@
 html, body {
     margin: 0;
     min-height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: radial-gradient(circle at top left, rgba(255,255,255,0.95), transparent 40%),
                 linear-gradient(180deg, var(--background-start) 0%, var(--background-end) 100%);
 }
@@ -124,4 +124,52 @@ footer.note {
     margin-top: 26px;
     font-size: 0.95rem;
     color: #6f7e6d;
+}
+
+.form-error {
+    margin: 0 0 18px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: rgba(183, 58, 110, 0.1);
+    border: 1px solid rgba(183, 58, 110, 0.25);
+    color: #6a3b5b;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.form-error.hidden {
+    display: none;
+}
+
+button[type="submit"]:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(111, 145, 104, 0.45);
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 16px;
+        align-items: flex-start;
+    }
+
+    .login-shell {
+        padding: 28px 22px 22px;
+        border-radius: 24px;
+    }
+
+    h1 {
+        font-size: 1.85rem;
+    }
+
+    textarea[name="phrase"] {
+        min-height: 120px;
+    }
+}
+
+@media (max-width: 400px) {
+    .login-shell {
+        padding: 22px 18px 18px;
+    }
 }

@@ -12,4 +12,6 @@ return [
     'world_width' => 3000,
     'world_height' => 3000,
     'max_drawing_bytes' => 2 * 1024 * 1024,
+    /** Distância mínima entre centros de flores (px no mapa; inclui margem de 20px). */
+    'flower_min_distance' => 80,
 ];

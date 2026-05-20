@@ -53,3 +53,34 @@ function is_valid_map_coordinate(int $value, string $axis): bool
         : (int) ($config['world_height'] ?? 3000);
     return $value >= 0 && $value <= $max;
 }
+
+function flower_min_distance(): int
+{
+    return max(20, (int) (app_config()['flower_min_distance'] ?? 80));
+}
+
+/**
+ * Verifica se a coordenada respeita o espaçamento mínimo entre plantações.
+ */
+function is_flower_location_available(mysqli $mysqli, int $x, int $y, int $excludeEntryId): bool
+{
+    $min = flower_min_distance();
+    $stmt = $mysqli->prepare(
+        'SELECT id FROM gardeners
+         WHERE id != ?
+           AND drawing_data IS NOT NULL AND drawing_data != \'\'
+           AND location_x IS NOT NULL AND location_y IS NOT NULL
+           AND (POW(location_x - ?, 2) + POW(location_y - ?, 2)) < ?'
+    );
+    if (!$stmt) {
+        return false;
+    }
+    $minSq = $min * $min;
+    $stmt->bind_param('iiii', $excludeEntryId, $x, $y, $minSq);
+    $stmt->execute();
+    $stmt->store_result();
+    $tooClose = $stmt->num_rows > 0;
+    $stmt->close();
+
+    return !$tooClose;
+}

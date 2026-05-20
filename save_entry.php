@@ -38,6 +38,13 @@ try {
         json_response(['success' => false, 'message' => 'Esta plantação já foi desenhada e não pode ser alterada.'], 409);
     }
 
+    if (!is_flower_location_available($mysqli, $locX, $locY, $entryId)) {
+        json_response([
+            'success' => false,
+            'message' => 'Este local está muito perto de outra plantação. Escolha outro espaço no mapa.',
+        ], 409);
+    }
+
     $stmt = $mysqli->prepare(
         'UPDATE gardeners SET drawing_data = ?, location_x = ?, location_y = ? WHERE id = ?'
     );

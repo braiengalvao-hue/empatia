@@ -17,6 +17,15 @@ Experiência web colaborativa em que cada pessoa registra nome e frase, escolhe 
    Isso cria o banco `jardim` e a tabela `gardeners`.
 5. Acesse: `http://localhost/2025/empatia/`
 
+## Melhorias recentes
+
+- Mapa com **arrastar para navegar** e altura mínima de **320vh**
+- Flores orgânicas com **paleta multicolorida** e efeito ao passar o mouse
+- **Espaçamento mínimo** entre plantações (cliente e servidor)
+- Interface mais **responsiva** (breakpoints 900 / 600 / 480 px)
+- Fonte **Inter**, chuva estilizada, votos com estado visual, `prefers-reduced-motion`
+- Validação do login sem `alert()`
+
 ## Fluxo da aplicação
 
 1. **index.php** — formulário com nome (máx. 30 caracteres) e frase (máx. 250).
