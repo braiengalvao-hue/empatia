@@ -133,7 +133,7 @@ try {
                 unset($_SESSION['entry_id']);
                 $entryId = null;
             }
-            $stmt->close();
+            $stmt->close(); 
         }
     }
 
